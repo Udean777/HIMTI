@@ -30,6 +30,7 @@
 							src={person.image}
 							alt={person.name}
 							class="h-64 w-full object-cover object-center"
+							loading="lazy"
 						/>
 
 						<div class="p-4">
