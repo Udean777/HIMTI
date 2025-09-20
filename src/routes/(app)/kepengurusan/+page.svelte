@@ -14,7 +14,7 @@
 	{#each divisions as division}
 		<div class="mb-16">
 			<h2 class="border-pastel-blue mb-8 border-l-8 pl-4 text-3xl font-bold">
-				Divisi {division}
+				{division !== 'BPH' ? `Divisi ${division}` : division}
 			</h2>
 
 			<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">

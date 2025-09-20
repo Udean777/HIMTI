@@ -1,10 +1,7 @@
-<script>
-	/** @type {string} */
-	export let text = 'Klik Saya';
-	/** @type {string} */
-	export let color = 'bg-pastel-blue';
-	/** @type {string} */
-	export let textColor = 'text-dark-black';
+<script lang="ts">
+  export let text: string = 'Klik Saya';
+  export let color: string = 'bg-pastel-blue';
+  export let textColor: string = 'text-dark-black';
 </script>
 
 <button
@@ -16,6 +13,7 @@
     font-bold transition-all duration-100
     ease-in-out active:translate-x-[4px] active:translate-y-[4px]
     active:shadow-none
+    cursor-pointer
     {color} {textColor}
   "
 >

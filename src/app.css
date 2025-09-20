@@ -44,6 +44,10 @@
 	}
 }
 
+* {
+	scroll-behavior: smooth;
+}
+
 .material-symbols--home-rounded {
 	display: inline-block;
 	width: 24px;

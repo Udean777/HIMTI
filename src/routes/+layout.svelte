@@ -7,10 +7,6 @@
 	let { children } = $props();
 </script>
 
-<svelte:head>
-	<title>Himpunan Mahasiswa Teknologi Informasi</title>
-</svelte:head>
-
 <Header />
 
 <main>

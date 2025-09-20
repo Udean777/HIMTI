@@ -30,7 +30,7 @@
     fixed top-0 left-0 z-50
     w-full transition-colors
     duration-300 ease-in-out
-    {scrolled ? 'bg-off-white brutal-shadow border-dark-black border-b-3' : 'bg-transparent'}
+    {scrolled ? 'bg-off-white border-dark-black border-b-3' : 'bg-transparent'}
     hidden p-4
     font-bold md:block
   "
