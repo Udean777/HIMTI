@@ -1,37 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { gsap } from 'gsap';
-
-	import { Code, ArrowRight } from 'lucide-svelte';
-
-	import Button from '$lib/components/ui/button/button.svelte';
-
-	onMount(() => {
-		const tl = gsap.timeline({
-			defaults: { duration: 0.8, ease: 'power3.out', opacity: 0 }
-		});
-
-		tl.from('.content-animation', {
-			y: 50,
-			stagger: 0.2
-		});
-
-		tl.from(
-			'.image-animation',
-			{
-				x: 50,
-				scale: 0.95
-			},
-			'-=0.6'
-		);
-	});
+	import { ArrowRight, Code } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 </script>
 
 <section
 	id="beranda"
 	class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-br py-24 lg:py-32"
 >
-	<!-- Elemen dekoratif latar belakang -->
 	<div
 		class="from-primary/30 to-secondary/20 absolute top-20 right-20 -z-10 h-72 w-72 rounded-full bg-gradient-to-br blur-3xl"
 	></div>
@@ -41,11 +16,10 @@
 
 	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="grid items-center gap-12 lg:grid-cols-2">
-			<!-- Konten Teks (Kiri) - Ditambahkan kelas 'content-animation' untuk target GSAP -->
-			<div class="content-animation space-y-8">
-				<div class="content-animation space-y-6">
+			<div class="space-y-8">
+				<div class="space-y-6">
 					<div
-						class="bg-primary text-primary-foreground inline-flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium"
+						class="bg-primary inline-flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium text-white"
 					>
 						<Code class="h-4 w-4" />
 						<span>Himpunan Mahasiswa Teknologi Informasi</span>
@@ -60,7 +34,7 @@
 					</p>
 				</div>
 
-				<div class="content-animation flex flex-col gap-4 sm:flex-row">
+				<div class="flex flex-col gap-4 sm:flex-row">
 					<Button size="lg" class="group text-white shadow-lg">
 						Daftar Sekarang
 						<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -69,8 +43,7 @@
 				</div>
 			</div>
 
-			<!-- Konten Gambar (Kanan) - Ditambahkan kelas 'image-animation' untuk target GSAP -->
-			<div class="image-animation relative">
+			<div class="relative">
 				<div
 					class="border-primary/20 bg-primary/10 shadow-primary relative rounded-3xl border p-2 shadow-2xl backdrop-blur-sm md:h-96"
 				>

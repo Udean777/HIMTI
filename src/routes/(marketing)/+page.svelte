@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	import Hero from '$lib/components/Hero.svelte';
-	import { gsap } from 'gsap';
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { ArrowRight } from 'lucide-svelte';
 
-	gsap.registerPlugin(ScrollTrigger);
-
+	// Data Misi dan Divisi tetap sama
 	const divisions = [
 		{
 			name: 'Divisi Humas',
@@ -54,56 +54,13 @@
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M15.042 21.672L13.684 16.6m0 0l-2.5-2.5m2.5 2.5l5.016-1.672M13.684 16.6L21 5l-5.016-1.672M13.684 16.6L3 19l1.672-5.016m0 0l2.5-2.5m-2.5 2.5L1 11l5.016 1.672m-5.016-1.672L9 3l1.672 5.016M11.316 8.332l2.5 2.5m-2.5-2.5l5.016 1.672"/></svg>`
 		}
 	];
-
-	$effect(() => {
-		const ctx = gsap.context(() => {
-			const animateCards = (selector: string, trigger: string) => {
-				gsap.from(selector, {
-					opacity: 0,
-					y: 40,
-					duration: 1,
-					stagger: 0.3,
-					ease: 'power3.out',
-					scrollTrigger: {
-						trigger,
-						start: 'top 45%',
-						toggleActions: 'play none none none',
-						markers: false
-					}
-				});
-			};
-
-			const animateTitle = (selector: string, trigger: string) => {
-				gsap.from(selector, {
-					opacity: 0,
-					y: 20,
-					duration: 0.8,
-					ease: 'power2.out',
-					scrollTrigger: {
-						trigger,
-						start: 'top 60%',
-						toggleActions: 'play none none none',
-						markers: false
-					}
-				});
-			};
-
-			animateTitle('.anim-tentang', '#tentang-kami');
-			animateTitle('.anim-visi', '#visi-misi');
-			animateTitle('.anim-divisi-title', '#divisi');
-			animateCards('.misi-card', '#visi-misi');
-			animateCards('.divisi-card', '#divisi');
-		});
-
-		return () => ctx.revert();
-	});
 </script>
 
 <div class="bg-background text-foreground">
 	<Hero />
 
-	<section id="tentang-kami" class="container mx-auto max-w-5xl px-6 py-24 sm:py-32">
-		<div class="anim-tentang mb-16 text-center">
+	<section class="container mx-auto max-w-5xl px-6 py-24 sm:py-32">
+		<div class="mb-16 text-center">
 			<h2 class="mb-4 text-3xl font-bold text-balance lg:text-4xl">
 				Tentang <span class="text-primary">Kami</span>
 			</h2>
@@ -114,7 +71,8 @@
 		</div>
 
 		<div
-			class="bg-card shadow-primary ring-border anim-tentang rounded-2xl p-8 text-center shadow-lg ring-1"
+			class="bg-card shadow-primary ring-border rounded-2xl p-8 text-center shadow-lg ring-1"
+			in:fly={{ y: 30, duration: 800, easing: quintOut }}
 		>
 			<p class="text-muted-foreground text-lg leading-8">
 				Kami berupaya membangun ekosistem yang mendorong kolaborasi, kreativitas, dan kepemimpinan
@@ -123,9 +81,9 @@
 		</div>
 	</section>
 
-	<section id="visi-misi" class="bg-muted py-24 sm:py-32">
+	<section class="bg-muted py-24 sm:py-32">
 		<div class="container mx-auto max-w-7xl px-6">
-			<div class="anim-visi mx-auto mb-16 max-w-3xl text-center">
+			<div class="mx-auto mb-16 max-w-3xl text-center">
 				<h2 class="mb-4 text-3xl font-bold tracking-tight text-balance lg:text-4xl">
 					Visi & <span class="text-primary">Misi</span>
 				</h2>
@@ -135,10 +93,11 @@
 				</p>
 			</div>
 
-			<div class="misi-card mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
-				{#each misiList as misi}
+			<div class="mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+				{#each misiList as misi, index}
 					<div
 						class="bg-card ring-border shadow-primary flex flex-col rounded-2xl p-8 ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
+						in:fly={{ y: 30, duration: 600, delay: 150 * index, easing: quintOut }}
 					>
 						<div class="mb-4">{@html misi.icon}</div>
 						<h3 class="text-card-foreground text-xl font-semibold">{misi.title}</h3>
@@ -152,7 +111,6 @@
 	</section>
 
 	<section
-		id="divisi"
 		class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-tl py-24 lg:py-32"
 	>
 		<div
@@ -163,7 +121,7 @@
 		></div>
 
 		<div class="relative mx-auto w-full max-w-7xl overflow-hidden px-6 py-6">
-			<div class="anim-divisi-title mx-auto mb-16 max-w-3xl text-center">
+			<div class="mx-auto mb-16 max-w-3xl text-center">
 				<h2 class="mb-4 text-3xl font-bold tracking-tight text-balance lg:text-4xl">
 					Divisi <span class="text-primary">Kami</span>
 				</h2>
@@ -173,19 +131,18 @@
 				</p>
 			</div>
 
-			<div class="divisi-card grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-				{#each divisions as division}
+			<div class="p grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+				{#each divisions as division, index}
 					<div
 						class="group bg-card/80 ring-border shadow-primary rounded-2xl p-6 ring-1 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
+						in:fly={{ y: 30, duration: 600, delay: 100 * index, easing: quintOut }}
 					>
 						<h3
 							class="text-card-foreground group-hover:text-primary text-xl font-semibold transition-colors"
 						>
 							{division.name}
 						</h3>
-						<p class="text-muted-foreground mt-3 text-base leading-7">
-							{division.description}
-						</p>
+						<p class="text-muted-foreground mt-3 text-base leading-7">{division.description}</p>
 						<a
 							href="/divisi"
 							class="text-primary mt-4 flex items-center font-semibold transition-transform group-hover:translate-x-1"
