@@ -83,7 +83,7 @@ export let kepengurusan = [
 		role: 'Kepala Divisi IPTEK',
 		division: 'IPTEK',
 		period: '2024/2025',
-		image: `${url}/Sajudin.jpg`
+		image: `${url}/Sajudin.jpg?updatedAt=1758378806210`
 	},
 	{
 		name: 'Gilang Gemilang',
@@ -242,7 +242,7 @@ export let members = [
 		role: 'Kepala Divisi IPTEK',
 		division: 'IPTEK',
 		period: '2024/2025',
-		image: `${url}/Sajudin.jpg`
+		image: `${url}/Sajudin.jpg?updatedAt=1758378806210`
 	},
 	{
 		name: 'Gilang Gemilang',
@@ -417,3 +417,12 @@ export let members = [
 		image: `/avatar-placeholder.png`
 	}
 ];
+
+export const divisionImages: Record<any, string> = {
+	DANUS: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/DANUS.jpg',
+	BPH: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/BPH.jpg',
+	IPTEK: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/IPTEK.jpg',
+	Kominfo: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/KOMINFO.jpg',
+	Prestasi: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/PRESTASI.jpg',
+	HUMAS: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/HUMAS.jpg',
+}

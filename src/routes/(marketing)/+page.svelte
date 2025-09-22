@@ -1,32 +1,36 @@
-<script>
-	import Button from '$lib/components/Button.svelte';
+<script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { ArrowRight } from 'lucide-svelte';
+
+	gsap.registerPlugin(ScrollTrigger);
 
 	const divisions = [
 		{
 			name: 'Divisi Humas',
 			description:
-				'Bertugas membangun dan menjaga hubungan baik antara HIMTI dengan pihak internal maupun eksternal, serta mengelola komunikasi dan publikasi kegiatan organisasi.'
+				'Bertugas membangun dan menjaga hubungan baik antara HIMTI dengan pihak internal maupun eksternal.'
 		},
 		{
 			name: 'Divisi Prestasi',
 			description:
-				'Fokus pada pengembangan prestasi anggota melalui penyelenggaraan lomba, pelatihan, serta mendukung partisipasi dalam kompetisi di bidang teknologi informasi.'
+				'Fokus pada pengembangan prestasi anggota melalui penyelenggaraan lomba, pelatihan, dan kompetisi.'
 		},
 		{
 			name: 'Divisi IPTEK',
 			description:
-				'Mengelola program pengembangan ilmu pengetahuan dan teknologi, seperti workshop, seminar, dan mentoring untuk meningkatkan kompetensi anggota.'
+				'Mengelola program pengembangan ilmu pengetahuan dan teknologi, seperti workshop, seminar, dan mentoring.'
 		},
 		{
 			name: 'Divisi Kominfo',
 			description:
-				'Bertanggung jawab atas pengelolaan informasi, dokumentasi, serta media sosial HIMTI untuk memastikan informasi tersampaikan dengan baik kepada seluruh anggota.'
+				'Bertanggung jawab atas pengelolaan informasi, dokumentasi, serta media sosial organisasi.'
 		},
 		{
 			name: 'Divisi Danus',
 			description:
-				'Mengelola dana usaha dan sumber daya organisasi melalui berbagai kegiatan kewirausahaan guna mendukung operasional HIMTI.'
+				'Mengelola dana usaha dan sumber daya organisasi melalui berbagai kegiatan kewirausahaan.'
 		}
 	];
 
@@ -34,127 +38,164 @@
 		{
 			title: 'Pengembangan Kompetensi',
 			description:
-				'Menyediakan pelatihan, seminar, dan workshop untuk meningkatkan keterampilan teknis dan non-teknis anggota, sehingga mereka siap menghadapi tantangan di dunia kerja.'
+				'Menyediakan pelatihan dan workshop untuk meningkatkan keterampilan teknis dan non-teknis anggota.',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`
 		},
 		{
 			title: 'Kolaborasi dan Jaringan',
 			description:
-				'Membangun jaringan yang kuat antara mahasiswa, alumni, dan profesional di bidang teknologi informasi untuk saling berbagi pengetahuan, pengalaman, dan peluang.'
+				'Membangun jaringan yang kuat antara mahasiswa, alumni, dan profesional di bidang teknologi.',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>`
 		},
 		{
 			title: 'Inovasi dan Kreativitas',
 			description:
-				'Mendorong anggota untuk berinovasi dan menciptakan proyek yang dapat memberikan dampak positif bagi masyarakat, serta memfasilitasi kompetisi dan hackathon.'
-		},
-		{
-			title: 'Kegiatan Sosial',
-			description:
-				'Mengadakan kegiatan sosial yang bertujuan untuk memberikan kontribusi kepada masyarakat dan meningkatkan kesadaran akan pentingnya teknologi informasi dalam kehidupan sehari-hari.'
-		},
-		{
-			title: 'Dukungan Akademis',
-			description:
-				'Menjadi wadah bagi anggota untuk saling mendukung dalam hal akademis, termasuk bimbingan belajar, diskusi kelompok, dan penyediaan sumber daya belajar.'
-		},
-		{
-			title: 'Peningkatan Kesadaran Teknologi',
-			description:
-				'Mengedukasi masyarakat tentang pentingnya teknologi informasi dan dampaknya, serta mempromosikan penggunaan teknologi yang bertanggung jawab.'
+				'Mendorong anggota untuk berinovasi dan menciptakan proyek yang dapat memberikan dampak positif.',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M15.042 21.672L13.684 16.6m0 0l-2.5-2.5m2.5 2.5l5.016-1.672M13.684 16.6L21 5l-5.016-1.672M13.684 16.6L3 19l1.672-5.016m0 0l2.5-2.5m-2.5 2.5L1 11l5.016 1.672m-5.016-1.672L9 3l1.672 5.016M11.316 8.332l2.5 2.5m-2.5-2.5l5.016 1.672"/></svg>`
 		}
 	];
+
+	$effect(() => {
+		const ctx = gsap.context(() => {
+			const animateCards = (selector: string, trigger: string) => {
+				gsap.from(selector, {
+					opacity: 0,
+					y: 40,
+					duration: 1,
+					stagger: 0.3,
+					ease: 'power3.out',
+					scrollTrigger: {
+						trigger,
+						start: 'top 45%',
+						toggleActions: 'play none none none',
+						markers: false
+					}
+				});
+			};
+
+			const animateTitle = (selector: string, trigger: string) => {
+				gsap.from(selector, {
+					opacity: 0,
+					y: 20,
+					duration: 0.8,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger,
+						start: 'top 60%',
+						toggleActions: 'play none none none',
+						markers: false
+					}
+				});
+			};
+
+			animateTitle('.anim-tentang', '#tentang-kami');
+			animateTitle('.anim-visi', '#visi-misi');
+			animateTitle('.anim-divisi-title', '#divisi');
+			animateCards('.misi-card', '#visi-misi');
+			animateCards('.divisi-card', '#divisi');
+		});
+
+		return () => ctx.revert();
+	});
 </script>
 
-<div>
-	<!-- Hero Section -->
-	<Hero
-		title="HIMTI"
-		typeWriterText="Selamat datang di Website Himpunan Mahasiswa Teknologi Informasi👋🏻"
-	>
-		<div slot="action">
-			<Button text="Gabung Sekarang" color="bg-pastel-blue" textColor="text-dark-black" />
+<div class="bg-background text-foreground">
+	<Hero />
+
+	<section id="tentang-kami" class="container mx-auto max-w-5xl px-6 py-24 sm:py-32">
+		<div class="anim-tentang mb-16 text-center">
+			<h2 class="mb-4 text-3xl font-bold text-balance lg:text-4xl">
+				Tentang <span class="text-primary">Kami</span>
+			</h2>
+			<p class="text-muted-foreground mx-auto max-w-3xl text-xl text-pretty">
+				HIMTI berkomitmen menjadi organisasi terdepan dalam pengembangan teknologi, menciptakan
+				inovasi yang berdampak positif bagi masyarakat dan industri.
+			</p>
 		</div>
-	</Hero>
 
-	<!-- About Section -->
-	<section class="container mx-auto max-w-7xl px-8 py-20">
-		<h2 class="mb-12 text-center text-5xl font-extrabold">Tentang Kami</h2>
-
-		<div class="border-dark-black brutal-shadow-lg bg-pastel-blue text-dark-black border-4 p-10">
-			<p class="text-center text-lg leading-relaxed">
-				Himpunan Mahasiswa Teknologi Informasi (HIMTI) berkomitmen untuk menjadi organisasi
-				mahasiswa yang terdepan dalam pengembangan teknologi informasi di lingkungan akademik maupun
-				masyarakat luas. Kami percaya bahwa kemajuan teknologi harus selaras dengan nilai-nilai
-				sosial dan tanggung jawab profesional. Oleh karena itu, HIMTI berupaya tidak hanya
-				menciptakan inovasi yang berdampak positif bagi masyarakat dan industri, tetapi juga
-				membangun ekosistem yang mendorong kolaborasi, kreativitas, dan kepemimpinan.
+		<div
+			class="bg-card shadow-primary ring-border anim-tentang rounded-2xl p-8 text-center shadow-lg ring-1"
+		>
+			<p class="text-muted-foreground text-lg leading-8">
+				Kami berupaya membangun ekosistem yang mendorong kolaborasi, kreativitas, dan kepemimpinan
+				di antara anggota untuk menghadapi tantangan teknologi masa depan.
 			</p>
 		</div>
 	</section>
 
-	<!-- Visi -->
-	<section class="container mx-auto max-w-7xl px-8 py-20">
-		<h2 class="brutal-text-stroke mb-12 text-center text-5xl font-extrabold">Visi</h2>
-		<div class="border-dark-black brutal-shadow bg-pastel-yellow text-dark-black border-4 p-8">
-			<h3 class="mb-4 text-3xl font-bold">Visi</h3>
-			<p class="text-lg leading-relaxed">
-				Menjadi organisasi mahasiswa terdepan dalam pengembangan teknologi informasi yang
-				berkontribusi positif bagi masyarakat dan industri, serta menciptakan lingkungan yang
-				mendukung pertumbuhan profesional dan pribadi anggotanya.
-			</p>
-		</div>
-	</section>
+	<section id="visi-misi" class="bg-muted py-24 sm:py-32">
+		<div class="container mx-auto max-w-7xl px-6">
+			<div class="anim-visi mx-auto mb-16 max-w-3xl text-center">
+				<h2 class="mb-4 text-3xl font-bold tracking-tight text-balance lg:text-4xl">
+					Visi & <span class="text-primary">Misi</span>
+				</h2>
+				<p class="text-muted-foreground text-xl text-pretty">
+					Menjadi organisasi mahasiswa terdepan yang berkontribusi positif bagi masyarakat dan
+					industri melalui inovasi teknologi.
+				</p>
+			</div>
 
-	<!-- Misi -->
-	<section class="container mx-auto max-w-7xl px-8 py-20">
-		<h2 class="mb-12 text-center text-5xl font-extrabold">Misi</h2>
-
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-			{#each misiList as misi, index}
-				<div
-					class="border-dark-black brutal-shadow hover:brutal-shadow-lg text-dark-black
-                transform border-4
-                p-6 transition-transform
-                hover:-translate-y-2
-                {index % 2 === 0 ? 'bg-pastel-yellow' : 'bg-pastel-blue'}
-                "
-				>
+			<div class="misi-card mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+				{#each misiList as misi}
 					<div
-						class="
-                        brutal-shadow-sm
-                        text-dark-black
-                        border-dark-black relative
-                        -top-4 -left-4 flex h-12 w-12 items-center
-                        justify-center border-4 text-2xl font-extrabold
-                        {index % 2 === 0 ? 'bg-pastel-blue' : 'bg-pastel-yellow'}"
+						class="bg-card ring-border shadow-primary flex flex-col rounded-2xl p-8 ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
 					>
-						{index + 1}
+						<div class="mb-4">{@html misi.icon}</div>
+						<h3 class="text-card-foreground text-xl font-semibold">{misi.title}</h3>
+						<p class="text-muted-foreground mt-2 flex-auto text-base leading-7">
+							{misi.description}
+						</p>
 					</div>
-					<h3 class="mt-4 mb-4 text-2xl font-bold">{misi.title}</h3>
-					<p class="text-base leading-relaxed">{misi.description}</p>
-				</div>
-			{/each}
+				{/each}
+			</div>
 		</div>
 	</section>
 
-	<!-- Divisi -->
-	<section class="container mx-auto max-w-7xl px-8 py-20">
-		<h2 class="mb-12 text-center text-5xl font-extrabold">Divisi Kami</h2>
+	<section
+		id="divisi"
+		class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-tl py-24 lg:py-32"
+	>
+		<div
+			class="from-primary/30 to-secondary/20 absolute top-20 right-20 -z-10 h-72 w-72 rounded-full bg-gradient-to-br blur-3xl"
+		></div>
+		<div
+			class="from-accent/10 to-primary/30 absolute bottom-20 left-20 -z-10 h-96 w-96 rounded-full bg-gradient-to-br blur-3xl"
+		></div>
 
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-			{#each divisions as division, index}
-				<div
-					class="border-dark-black brutal-shadow-sm hover:brutal-shadow-lg
-                    text-dark-black transform
-                     border-4 p-6 transition-transform hover:-translate-y-2
-                     {index % 2 === 0 ? 'bg-pastel-yellow' : 'bg-pastel-blue'}"
-				>
-					<h3 class="mb-2 text-2xl font-bold">{division.name}</h3>
-					<p class="mb-4 text-base">{division.description}</p>
-					<a href="/divisi" class="font-bold underline transition-colors hover:text-blue-500">
-						Lihat Detail &rarr;</a
+		<div class="relative mx-auto w-full max-w-7xl overflow-hidden px-6 py-6">
+			<div class="anim-divisi-title mx-auto mb-16 max-w-3xl text-center">
+				<h2 class="mb-4 text-3xl font-bold tracking-tight text-balance lg:text-4xl">
+					Divisi <span class="text-primary">Kami</span>
+				</h2>
+				<p class="text-muted-foreground text-xl text-pretty">
+					Setiap divisi memiliki peran penting dalam mencapai tujuan organisasi dan memberdayakan
+					anggota.
+				</p>
+			</div>
+
+			<div class="divisi-card grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+				{#each divisions as division}
+					<div
+						class="group bg-card/80 ring-border shadow-primary rounded-2xl p-6 ring-1 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
 					>
-				</div>
-			{/each}
+						<h3
+							class="text-card-foreground group-hover:text-primary text-xl font-semibold transition-colors"
+						>
+							{division.name}
+						</h3>
+						<p class="text-muted-foreground mt-3 text-base leading-7">
+							{division.description}
+						</p>
+						<a
+							href="/divisi"
+							class="text-primary mt-4 flex items-center font-semibold transition-transform group-hover:translate-x-1"
+						>
+							Lihat Detail
+							<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+						</a>
+					</div>
+				{/each}
+			</div>
 		</div>
 	</section>
 </div>

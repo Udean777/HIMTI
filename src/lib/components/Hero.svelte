@@ -1,85 +1,87 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import Button from './Button.svelte';
-	import Typewriter from './Typewriter.svelte';
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
 
-	export let title = 'HIMTI';
-	export let imageUrl = '/himti-1.png'; // URL gambar asli
-	export let typeWriterText =
-		'Halaman ini memuat seluruh struktur organisasi kepengurusan dari HIMTI';
+	import { Code, ArrowRight } from 'lucide-svelte';
 
-	let sectionRef: HTMLElement; // Referensi ke elemen section
-	let backgroundImageLoaded = false; // Status untuk melacak apakah gambar sudah dimuat
-
-	let observer: IntersectionObserver;
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	onMount(() => {
-		if (sectionRef) {
-			observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting && !backgroundImageLoaded) {
-							// Ketika section masuk viewport dan gambar belum dimuat
-							backgroundImageLoaded = true; // Setel status menjadi dimuat
-							observer.unobserve(sectionRef); // Berhenti mengamati setelah dimuat
-						}
-					});
-				},
-				{
-					rootMargin: '0px 0px 50px 0px' // Muat 50px sebelum section masuk viewport
-				}
-			);
+		const tl = gsap.timeline({
+			defaults: { duration: 0.8, ease: 'power3.out', opacity: 0 }
+		});
 
-			observer.observe(sectionRef);
-		}
-	});
+		tl.from('.content-animation', {
+			y: 50,
+			stagger: 0.2
+		});
 
-	onDestroy(() => {
-		if (observer && sectionRef) {
-			observer.unobserve(sectionRef);
-		}
+		tl.from(
+			'.image-animation',
+			{
+				x: 50,
+				scale: 0.95
+			},
+			'-=0.6'
+		);
 	});
 </script>
 
 <section
-	bind:this={sectionRef}
-	class="
-      text-off-white relative flex h-screen flex-col items-center
-      justify-center overflow-hidden px-8 pt-20 text-center
-    "
+	id="beranda"
+	class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-br py-24 lg:py-32"
 >
+	<!-- Elemen dekoratif latar belakang -->
 	<div
-		class="absolute inset-0 bg-cover bg-center"
-		style="background-image: url('{backgroundImageLoaded ? imageUrl : ''}');"
-		role="img"
-		aria-label="Gambar Kepengurusan HIMTI 2024/2025"
-	>
-		<div class="bg-dark-black absolute inset-0 opacity-50"></div>
-	</div>
+		class="from-primary/30 to-secondary/20 absolute top-20 right-20 -z-10 h-72 w-72 rounded-full bg-gradient-to-br blur-3xl"
+	></div>
+	<div
+		class="from-accent/10 to-primary/30 absolute bottom-20 left-20 -z-10 h-96 w-96 rounded-full bg-gradient-to-br blur-3xl"
+	></div>
 
-	<div
-		class="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-10 md:flex-row"
-	>
-		<div class="w-full text-left md:w-1/2">
-			<h1 class="brutal-text-stroke mb-6 text-6xl font-extrabold">{title}</h1>
-			<div
-				class="brutal-shadow bg-pastel-yellow border-dark-black text-dark-black mb-8
-                flex min-h-[80px] w-[20rem] max-w-lg border-4 p-4 lg:w-[40rem]"
-			>
-				<Typewriter text={typeWriterText} speed={50} delay={1000} />
+	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid items-center gap-12 lg:grid-cols-2">
+			<!-- Konten Teks (Kiri) - Ditambahkan kelas 'content-animation' untuk target GSAP -->
+			<div class="content-animation space-y-8">
+				<div class="content-animation space-y-6">
+					<div
+						class="bg-primary text-primary-foreground inline-flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium"
+					>
+						<Code class="h-4 w-4" />
+						<span>Himpunan Mahasiswa Teknologi Informasi</span>
+					</div>
+					<h1 class="text-4xl leading-tight font-bold text-balance lg:text-6xl">
+						Bergabunglah dengan
+						<span class="text-primary"> HIMTI UNPAB </span>
+					</h1>
+					<p class="text-muted-foreground text-xl leading-relaxed text-pretty">
+						Wadah mahasiswa Teknologi Informasi untuk mengembangkan potensi, berbagi ilmu, dan
+						membangun jaringan profesional di era digital.
+					</p>
+				</div>
+
+				<div class="content-animation flex flex-col gap-4 sm:flex-row">
+					<Button size="lg" class="group text-white shadow-lg">
+						Daftar Sekarang
+						<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+					</Button>
+					<Button size="lg" variant="outline">Pelajari Lebih Lanjut</Button>
+				</div>
 			</div>
 
-			<slot name="action" />
-		</div>
-		<div class="hidden w-1/3 md:block">
-			<img
-				src="/logo/logo-himti.png"
-				alt="Logo Himti"
-				loading="lazy"
-				width="256"
-				height="256"
-				class="mx-auto h-auto w-64 sm:w-80 md:w-full"
-			/>
+			<!-- Konten Gambar (Kanan) - Ditambahkan kelas 'image-animation' untuk target GSAP -->
+			<div class="image-animation relative">
+				<div
+					class="border-primary/20 bg-primary/10 shadow-primary relative rounded-3xl border p-2 shadow-2xl backdrop-blur-sm md:h-96"
+				>
+					<img
+						src="/himti-1.png"
+						alt="Aktivitas Mahasiswa HIMTI"
+						loading="lazy"
+						class="h-auto w-full rounded-2xl object-cover md:h-full"
+					/>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
