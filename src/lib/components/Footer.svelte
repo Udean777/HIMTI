@@ -30,7 +30,7 @@
 		<div class="flex flex-col items-center justify-center gap-12 py-16 md:flex-row">
 			<div class="text-left">
 				<div class="flex items-center justify-center gap-3">
-					<img src="/logo/logo-himti.png" alt="Logo Himti" class="h-12 w-12" />
+					<img src="/logo-himti.png" alt="Logo Himti" class="h-12 w-12" />
 					<div>
 						<h2 class="text-2xl font-semibold text-white">HIMTI</h2>
 						<p class="text-sm text-slate-400">Himpunan Mahasiswa Teknologi Informasi</p>

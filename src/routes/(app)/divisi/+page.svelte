@@ -37,6 +37,11 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Informasi Divisi - HIMTI</title>
+	<meta name="description" content="Kumpulan informasi tentang Divisi UNPAB." />
+</svelte:head>
+
 <section
 	class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-br py-24 lg:py-32"
 >
@@ -50,7 +55,7 @@
 	<div class="container mx-auto max-w-7xl px-6">
 		<div class="mx-auto mb-16 max-w-3xl text-center">
 			<h1 class="mb-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
-				Struktur <span class="text-primary">Kepengurusan</span>
+				Struktur <span class="text-primary">Divisi</span>
 			</h1>
 			<p class="text-muted-foreground text-xl text-pretty">
 				Kenali tim yang berdedikasi di balik layar, mendorong inovasi dan kolaborasi di HIMTI.

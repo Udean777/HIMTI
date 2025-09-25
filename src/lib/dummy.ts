@@ -177,6 +177,27 @@ export let members = [
 		period: '2024/2025',
 		image: `${url}/Silmi.jpg`
 	},
+	{
+		name: 'Arjuna Prayoga Satriongko',
+		role: 'Anggota DANUS',
+		division: 'DANUS',
+		period: '2024/2025',
+		image: `/avatar-placeholder.png`
+	},
+	{
+		name: 'Ramses Morgana Surbakti',
+		role: 'Anggota DANUS',
+		division: 'DANUS',
+		period: '2024/2025',
+		image: `/avatar-placeholder.png`
+	},
+	{
+		name: 'Alfin Faiz Pratama',
+		role: 'Anggota DANUS',
+		division: 'DANUS',
+		period: '2024/2025',
+		image: `/avatar-placeholder.png`
+	},
 
 	// HUMAS
 	{
@@ -424,5 +445,5 @@ export const divisionImages: Record<any, string> = {
 	IPTEK: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/IPTEK.jpg',
 	Kominfo: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/KOMINFO.jpg',
 	Prestasi: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/PRESTASI.jpg',
-	HUMAS: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/HUMAS.jpg',
-}
+	HUMAS: 'https://ik.imagekit.io/odinyangasli/foto%20pengurus/HUMAS.jpg'
+};

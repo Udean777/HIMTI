@@ -3,14 +3,13 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import { Menu, X } from 'lucide-svelte'; // Ikon untuk tombol hamburger
+	import { Menu, X } from 'lucide-svelte';
 	import DarkModeToggle from './DarkModeToggle.svelte';
 
 	const navItems = [
 		{ name: 'Beranda', href: '/' },
 		{ name: 'Kepengurusan', href: '/kepengurusan' },
 		{ name: 'Divisi', href: '/divisi' },
-		{ name: 'Event', href: '/event' },
 		{ name: 'Berita', href: '/berita' }
 	];
 
@@ -39,7 +38,7 @@
 >
 	<nav class="relative container mx-auto flex max-w-7xl items-center justify-between p-4">
 		<a href="/" class="text-foreground z-10 flex items-center gap-3">
-			<img src="/logo/logo-himti.png" alt="Logo Himti" class="h-12 w-auto" />
+			<img src="/logo-himti.png" alt="Logo Himti" class="h-12 w-auto" />
 			<div>
 				<span class="text-2xl font-bold">HIMTI</span>
 				<p class="text-muted-foreground text-xs">Himpunan Mahasiswa Teknologi Informasi</p>
@@ -66,7 +65,7 @@
 		<div class="z-10 flex items-center gap-2 md:hidden">
 			<DarkModeToggle />
 			<button
-				on:click={toggleMenu}
+				onclick={toggleMenu}
 				aria-label="Toggle Menu"
 				class="text-foreground hover:bg-accent rounded-md p-2 transition-colors"
 			>
@@ -91,7 +90,7 @@
 							href={item.href}
 							class="border-border hover:bg-accent block border-t px-6 py-4 text-center font-medium transition-colors"
 							class:active={$page.url.pathname === item.href}
-							on:click={() => (isOpen = false)}
+							onclick={() => (isOpen = false)}
 						>
 							{item.name}
 						</a>
@@ -103,13 +102,11 @@
 </header>
 
 <style>
-	/* Gaya ini akan berlaku untuk link aktif di desktop dan mobile */
 	.active {
 		color: hsl(var(--primary));
-		font-weight: 600; /* semi-bold */
+		font-weight: 600;
 	}
 
-	/* Saat menu mobile terbuka atau saat di-scroll, berikan background */
 	.scrolled {
 		background-color: hsl(var(--background) / 0.8);
 		border-bottom: 1px solid hsl(var(--border) / 0.5);

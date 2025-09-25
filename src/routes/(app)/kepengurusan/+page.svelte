@@ -41,6 +41,11 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Informasi Kepengurusan - HIMTI</title>
+	<meta name="description" content="Kumpulan informasi tentang Struktur Kepengurusan UNPAB." />
+</svelte:head>
+
 <section
 	class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-br py-32"
 >

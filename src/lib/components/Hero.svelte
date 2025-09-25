@@ -1,6 +1,20 @@
 <script lang="ts">
 	import { ArrowRight, Code } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle
+	} from './ui/dialog';
+
+	let openDialog = false;
+
+	const handleOpenDialog = () => {
+		openDialog = true;
+	};
 </script>
 
 <section
@@ -35,11 +49,13 @@
 				</div>
 
 				<div class="flex flex-col gap-4 sm:flex-row">
-					<Button size="lg" class="group text-white shadow-lg">
+					<Button size="lg" class="group text-white shadow-lg" onclick={handleOpenDialog}>
 						Daftar Sekarang
 						<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 					</Button>
-					<Button size="lg" variant="outline">Pelajari Lebih Lanjut</Button>
+					<Button size="lg" variant="outline" href="/berita/mengenal-himti-unpab"
+						>Pelajari Lebih Lanjut</Button
+					>
 				</div>
 			</div>
 
@@ -58,3 +74,23 @@
 		</div>
 	</div>
 </section>
+
+<Dialog open={openDialog} onOpenChange={(v) => (openDialog = v)}>
+	<DialogContent class="sm:max-w-md">
+		<DialogHeader>
+			<DialogTitle>Pendaftaran Belum Dibuka</DialogTitle>
+			<DialogDescription class="space-y-2">
+				<p>Pendaftaran HIMTI bakal dibuka sebentar lagi! Jangan sampai ketinggalan infonya ya.</p>
+				<p>
+					Pantengin terus <strong>website</strong> dan <strong>sosmed HIMTI UNPAB</strong> biar kamu
+					jadi yang pertama tahu.
+				</p>
+				<p>Stay tune dan siap-siap gabung bareng kita! ✨</p>
+			</DialogDescription>
+		</DialogHeader>
+
+		<DialogFooter>
+			<Button variant="outline" onclick={() => (openDialog = false)}>Oke, Siap! 🙌</Button>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
