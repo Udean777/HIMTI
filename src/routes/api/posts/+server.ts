@@ -9,11 +9,11 @@ interface Post {
 export const GET: RequestHandler = async () => {
 	const posts: Post[] = [
 		{
-			slug: 'artikel-pertama-himti',
+			slug: 'pelatihan-website-kader',
 			updated_at: '2025-09-20T10:00:00Z'
 		},
 		{
-			slug: 'workshop-web-development',
+			slug: 'mengenal-himti-unpab',
 			updated_at: '2025-09-18T14:30:00Z'
 		}
 	];

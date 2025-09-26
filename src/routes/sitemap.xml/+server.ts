@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 
 interface Post {
 	slug: string;
-	updated_at: string; 
+	updated_at: string;
 }
 
 const site: string = 'https://www.himtiunpab.com';
@@ -11,12 +11,7 @@ export const GET: RequestHandler = async ({ fetch }) => {
 	const response = await fetch('/api/posts');
 	const posts: Post[] = await response.json();
 
-	const staticPages: string[] = [
-        '/', 
-        '/tentang', 
-        '/kegiatan', 
-        '/kontak'
-    ];
+	const staticPages: string[] = ['/', '/kepengurusan', '/divisi', '/berita'];
 
 	const body = render(staticPages, posts);
 
@@ -28,7 +23,10 @@ export const GET: RequestHandler = async ({ fetch }) => {
 	return new Response(body, { headers });
 };
 
-const render = (staticPages: string[], posts: Post[]): string => `<?xml version="1.0" encoding="UTF-8" ?>
+const render = (
+	staticPages: string[],
+	posts: Post[]
+): string => `<?xml version="1.0" encoding="UTF-8" ?>
 <urlset
   xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="https://www.w3.org/1999/xhtml"
