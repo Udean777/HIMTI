@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { divisionImages, kepengurusan } from '$lib/dummy';
-	import { quintOut } from 'svelte/easing';
-	import { fly, fade } from 'svelte/transition';
 
 	const divisionDetails: Record<string, string> = {
 		BPH: 'Badan Pengurus Harian yang menjadi inti dari organisasi, bertanggung jawab atas arah strategis dan operasional HIMTI.',
@@ -39,6 +37,35 @@
 	const handleTabClick = (division: string) => {
 		activeDivision = division;
 	};
+
+	function animateOnScroll(node: HTMLElement) {
+		node.style.opacity = '0';
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						node.classList.add('start-animation');
+
+						observer.unobserve(node);
+					}
+				});
+			},
+			{
+				threshold: 0.1
+			}
+		);
+
+		observer.observe(node);
+
+		return {
+			destroy() {
+				if (observer) {
+					observer.disconnect();
+				}
+			}
+		};
+	}
 </script>
 
 <svelte:head>
@@ -85,7 +112,7 @@
 		</div>
 
 		{#key activeDivision}
-			<div in:fade={{ duration: 400, delay: 150 }} out:fade={{ duration: 150 }}>
+			<div class="animate-fade-in start-animation" use:animateOnScroll>
 				<div class="relative mx-auto mb-16 max-w-5xl overflow-hidden rounded-xl shadow-lg">
 					<img
 						src={divisionImages[activeDivision]}
@@ -107,10 +134,7 @@
 				</div>
 
 				{#if divisionHead}
-					<div
-						class="mb-14 flex justify-center"
-						in:fly={{ y: 30, duration: 500, easing: quintOut }}
-					>
+					<div class="animate-fly-up mb-14 flex justify-center" use:animateOnScroll>
 						<div
 							class="bg-card text-card-foreground group !border-primary shadow-primary/20 relative flex w-full max-w-[300px] flex-col overflow-hidden rounded-sm border-2 text-center shadow-lg transition-all duration-300 hover:-translate-y-2"
 						>
@@ -136,8 +160,9 @@
 					<div class="flex flex-wrap justify-center gap-6">
 						{#each divisionMembers as person, i (person.name)}
 							<div
-								in:fly={{ y: 30, duration: 500, delay: i * 80, easing: quintOut }}
-								class="bg-card text-card-foreground group flex w-full max-w-[280px] flex-col overflow-hidden rounded-sm border text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
+								class="bg-card text-card-foreground group animate-fly-up flex w-full max-w-[280px] flex-col overflow-hidden rounded-sm border text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
+								use:animateOnScroll
+								style="--delay: {100 * i}ms;"
 							>
 								<div class="aspect-square overflow-hidden">
 									<img
@@ -162,9 +187,55 @@
 </section>
 
 <style>
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fly-up {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.animate-fade-in,
+	.animate-fly-up {
+		animation-fill-mode: both;
+		animation-play-state: paused;
+	}
+
+	.animate-fade-in {
+		animation-name: fade-in;
+		animation-duration: 400ms;
+		animation-timing-function: ease-out;
+		animation-delay: 150ms;
+	}
+
+	.animate-fly-up {
+		--delay: 0ms;
+		animation-name: fly-up;
+		animation-duration: 500ms;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+		animation-delay: var(--delay);
+	}
+
+	.start-animation {
+		animation-play-state: running;
+	}
+
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
 	}
+
 	.scrollbar-hide {
 		-ms-overflow-style: none;
 		scrollbar-width: none;

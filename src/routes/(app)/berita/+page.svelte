@@ -37,7 +37,8 @@
 				{#if i === 0}
 					<a
 						href={`/berita/${article.slug}`}
-						class="group hover:shadow-primary/20 relative col-span-1 row-span-1 flex flex-col justify-end overflow-hidden rounded-xl border shadow-sm transition-shadow duration-300 md:col-span-2 lg:row-span-2"
+						class="group hover:shadow-primary/20 animate-fly-up relative col-span-1 row-span-1 flex flex-col justify-end overflow-hidden rounded-xl border shadow-sm transition-shadow duration-300 md:col-span-2 lg:row-span-2"
+						style="--delay: {i * 100}ms;"
 					>
 						<img
 							src={article.coverImage}
@@ -65,7 +66,8 @@
 				{:else}
 					<a
 						href={`/berita/${article.slug}`}
-						class="bg-card text-card-foreground group hover:shadow-primary/20 flex flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1"
+						class="bg-card text-card-foreground group hover:shadow-primary/20 animate-fly-up flex flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1"
+						style="--delay: {i * 100}ms;"
 					>
 						<div class="overflow-hidden">
 							<img
@@ -94,3 +96,25 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	@keyframes fly-up {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.animate-fly-up {
+		--delay: 0ms; /* Nilai default untuk delay */
+		animation-name: fly-up;
+		animation-duration: 500ms;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+		animation-fill-mode: both;
+		animation-delay: var(--delay);
+	}
+</style>

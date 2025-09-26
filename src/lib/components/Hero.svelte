@@ -21,6 +21,7 @@
 	id="beranda"
 	class="from-primary/20 via-background to-background relative w-full overflow-hidden bg-gradient-to-br py-24 lg:py-32"
 >
+	<!-- Elemen dekoratif blur (tidak berubah) -->
 	<div
 		class="from-primary/30 to-secondary/20 absolute top-20 right-20 -z-10 h-72 w-72 rounded-full bg-gradient-to-br blur-3xl"
 	></div>
@@ -30,7 +31,8 @@
 
 	<div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="grid items-center gap-12 lg:grid-cols-2">
-			<div class="space-y-8">
+			<!-- Konten Kiri dengan animasi -->
+			<div class="slide-in-left space-y-8">
 				<div class="space-y-6">
 					<div
 						class="bg-primary inline-flex items-center space-x-2 rounded-full px-4 py-2 text-sm font-medium text-white"
@@ -53,13 +55,12 @@
 						Daftar Sekarang
 						<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 					</Button>
-					<Button size="lg" variant="outline" href="/berita/mengenal-himti-unpab"
-						>Pelajari Lebih Lanjut</Button
-					>
+					<Button size="lg" variant="outline" href="/berita">Pelajari Lebih Lanjut</Button>
 				</div>
 			</div>
 
-			<div class="relative">
+			<!-- Konten Kanan (Gambar) dengan animasi dan delay -->
+			<div class="slide-in-right relative">
 				<div
 					class="border-primary/20 bg-primary/10 shadow-primary relative rounded-3xl border p-2 shadow-2xl backdrop-blur-sm md:h-96"
 				>
@@ -94,3 +95,42 @@
 		</DialogFooter>
 	</DialogContent>
 </Dialog>
+
+<!-- CSS untuk animasi -->
+<style>
+	/* Definisikan keyframes untuk animasi slide dari kiri */
+	@keyframes slideInLeft {
+		from {
+			opacity: 0;
+			transform: translateX(-100px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	/* Definisikan keyframes untuk animasi slide dari kanan */
+	@keyframes slideInRight {
+		from {
+			opacity: 0;
+			transform: translateX(100px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	/* Class untuk menerapkan animasi slide-in-left */
+	.slide-in-left {
+		animation: slideInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+	}
+
+	/* Class untuk menerapkan animasi slide-in-right */
+	.slide-in-right {
+		animation: slideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+		/* Tambahkan delay agar muncul setelah konten kiri */
+		animation-delay: 200ms;
+	}
+</style>

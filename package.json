@@ -38,6 +38,7 @@
 	},
 	"dependencies": {
 		"@hugeicons/svelte": "^1.0.2",
+		"animate.css": "^4.1.1",
 		"gsap": "^3.13.0",
 		"lucide-svelte": "^0.544.0"
 	}

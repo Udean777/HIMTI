@@ -1,13 +1,39 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
 	import Hero from '$lib/components/Hero.svelte';
 	import { ArrowRight, FileText, Lightbulb, Users } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { kepengurusan } from '$lib/dummy';
 
-	// Data Misi dan Divisi tetap sama
+	function animateOnScroll(node: HTMLElement) {
+		// Atur state awal (transparan) sebelum animasi dimulai
+		node.style.opacity = '0';
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						// Saat elemen terlihat, tambahkan kelas untuk memulai animasi
+						node.classList.add('start-animation');
+						// Berhenti mengobservasi setelah animasi berjalan sekali
+						observer.unobserve(node);
+					}
+				});
+			},
+			{
+				threshold: 0.1 // Animasi trigger saat 10% elemen terlihat
+			}
+		);
+
+		observer.observe(node);
+
+		return {
+			destroy() {
+				// Bersihkan observer saat komponen dihancurkan
+				observer.disconnect();
+			}
+		};
+	}
+
 	const divisions = [
 		{
 			name: 'Divisi Humas',
@@ -83,8 +109,8 @@
 		</div>
 
 		<div
-			class="bg-card shadow-primary ring-border my-16 rounded-2xl p-8 text-center shadow-lg ring-1"
-			in:fly={{ y: 30, duration: 800, easing: quintOut }}
+			class="bg-card shadow-primary ring-border animate-fly-up my-16 rounded-2xl p-8 text-center shadow-lg ring-1"
+			use:animateOnScroll
 		>
 			<p class="text-muted-foreground text-lg leading-8">
 				Kami berupaya membangun ekosistem yang mendorong kolaborasi, kreativitas, dan kepemimpinan
@@ -93,7 +119,7 @@
 		</div>
 
 		<div class="mx-auto flex flex-col items-center justify-center gap-4 sm:flex-row">
-			<Button size="lg" class="group text-white shadow-lg" href="/berita/mengenal-himti-unpab">
+			<Button size="lg" class="group text-white shadow-lg" href="/berita">
 				Baca Selengkapnya
 				<ArrowRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 			</Button>
@@ -115,10 +141,10 @@
 			<div class="mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
 				{#each misiList as misi, index}
 					<div
-						class="bg-card ring-border shadow-primary flex flex-col rounded-2xl p-8 ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
-						in:fly={{ y: 30, duration: 600, delay: 150 * index, easing: quintOut }}
+						class="bg-card ring-border shadow-primary animate-fly-up flex flex-col rounded-2xl p-8 ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
+						use:animateOnScroll
+						style="--delay: {150 * index}ms;"
 					>
-						<svelte:component this={misi.icon} class="text-primary h-8 w-8" />
 						<h3 class="text-card-foreground text-xl font-semibold">{misi.title}</h3>
 						<p class="text-muted-foreground mt-2 flex-auto text-base leading-7">
 							{misi.description}
@@ -144,8 +170,9 @@
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-4">
 				{#each bph as member, index}
 					<div
-						class="group bg-card ring-border flex flex-col items-center rounded-2xl p-6 text-center shadow-lg ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-						in:fly={{ y: 30, duration: 600, delay: 100 * index, easing: quintOut }}
+						class="group bg-card ring-border animate-fly-up flex flex-col items-center rounded-2xl p-6 text-center shadow-lg ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+						use:animateOnScroll
+						style="--delay: {100 * index}ms;"
 					>
 						<div class="ring-primary/20 overflow-hidden rounded-full ring-4">
 							<img
@@ -194,8 +221,9 @@
 								? 'md:col-span-2'
 								: 'md:col-span-1'}
 					<div
-						class="group bg-card/80 ring-border shadow-primary flex flex-col justify-center rounded-2xl p-8 ring-1 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md {colSpan}"
-						in:fly={{ y: 30, duration: 600, delay: 100 * index, easing: quintOut }}
+						class="group bg-card/80 ring-border shadow-primary flex flex-col justify-center rounded-2xl p-8 ring-1 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md {colSpan} animate-fly-up"
+						use:animateOnScroll
+						style="--delay: {100 * index}ms;"
 					>
 						<h3
 							class="text-card-foreground group-hover:text-primary text-2xl font-semibold transition-colors"
@@ -216,3 +244,38 @@
 		</div>
 	</section>
 </div>
+
+<style>
+	/* 1. Definisikan keyframes untuk animasi "fly up" */
+	@keyframes fly-up {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* 2. Buat class dasar untuk menerapkan animasi */
+	.animate-fly-up {
+		/* Properti variabel CSS untuk delay, default-nya 0ms */
+		--delay: 0ms;
+
+		/* Atur properti animasi */
+		animation-name: fly-up;
+		animation-duration: 800ms;
+		animation-delay: var(--delay);
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); /* Mirip dengan quintOut */
+		animation-fill-mode: both;
+
+		/* Jaga agar animasi 'paused' sampai di-trigger oleh JavaScript */
+		animation-play-state: paused;
+	}
+
+	/* 3. Saat kelas .start-animation ditambahkan oleh JS, jalankan animasi */
+	.start-animation {
+		animation-play-state: running;
+	}
+</style>
