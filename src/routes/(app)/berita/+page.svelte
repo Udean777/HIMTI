@@ -110,7 +110,7 @@
 	}
 
 	.animate-fly-up {
-		--delay: 0ms; /* Nilai default untuk delay */
+		--delay: 0ms;
 		animation-name: fly-up;
 		animation-duration: 500ms;
 		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);

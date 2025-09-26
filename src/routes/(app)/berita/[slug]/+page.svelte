@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { allArticles } from '$lib/events';
 	import { error } from '@sveltejs/kit';
-	import { ArrowLeft } from 'lucide-svelte';
+	import { ArrowLeft, Calendar, Tag } from 'lucide-svelte';
 
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 
@@ -13,9 +13,9 @@
 		error(404, 'Halaman berita tidak ditemukan');
 	}
 
-	let isDialogOpen = false;
-	let selectedImageUrl: string | null = null;
-	let selectedImageAlt = '';
+	let isDialogOpen = $state(false);
+	let selectedImageUrl: string | null = $state(null);
+	let selectedImageAlt = $state('');
 
 	function handleImageClick(imageUrl: string, imageAlt: string) {
 		selectedImageUrl = imageUrl;
@@ -40,8 +40,21 @@
 			Kembali ke Semua Berita
 		</a>
 
-		<div class="mb-12"></div>
-
+		<div class="mb-12">
+			<h1 class="mb-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
+				{article.title}
+			</h1>
+			<div class="text-muted-foreground flex flex-wrap items-center gap-x-6 gap-y-2">
+				<div class="flex items-center gap-2">
+					<Calendar class="text-primary h-5 w-5" />
+					<span class="font-medium">{article.date}</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<Tag class="text-primary h-5 w-5" />
+					<span class="font-medium">{article.category}</span>
+				</div>
+			</div>
+		</div>
 		<article class="prose prose-lg dark:prose-invert mb-16 max-w-none">
 			{@html article.details || article.excerpt}
 		</article>
@@ -56,7 +69,7 @@
 							{#each gallerySection.images as imageUrl, i}
 								{@const imageAlt = `Dokumentasi ${gallerySection.title} (${i + 1})`}
 								<button
-									on:click={() => handleImageClick(imageUrl, imageAlt)}
+									onclick={() => handleImageClick(imageUrl, imageAlt)}
 									class="group focus:ring-primary relative block w-full overflow-hidden rounded-lg shadow-md focus:ring-2 focus:ring-offset-2 focus:outline-none"
 								>
 									<img

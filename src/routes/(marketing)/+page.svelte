@@ -5,22 +5,19 @@
 	import { kepengurusan } from '$lib/dummy';
 
 	function animateOnScroll(node: HTMLElement) {
-		// Atur state awal (transparan) sebelum animasi dimulai
 		node.style.opacity = '0';
 
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
-						// Saat elemen terlihat, tambahkan kelas untuk memulai animasi
 						node.classList.add('start-animation');
-						// Berhenti mengobservasi setelah animasi berjalan sekali
 						observer.unobserve(node);
 					}
 				});
 			},
 			{
-				threshold: 0.1 // Animasi trigger saat 10% elemen terlihat
+				threshold: 0.1
 			}
 		);
 
@@ -28,7 +25,6 @@
 
 		return {
 			destroy() {
-				// Bersihkan observer saat komponen dihancurkan
 				observer.disconnect();
 			}
 		};
@@ -246,7 +242,6 @@
 </div>
 
 <style>
-	/* 1. Definisikan keyframes untuk animasi "fly up" */
 	@keyframes fly-up {
 		from {
 			opacity: 0;
@@ -258,23 +253,16 @@
 		}
 	}
 
-	/* 2. Buat class dasar untuk menerapkan animasi */
 	.animate-fly-up {
-		/* Properti variabel CSS untuk delay, default-nya 0ms */
 		--delay: 0ms;
-
-		/* Atur properti animasi */
 		animation-name: fly-up;
 		animation-duration: 800ms;
 		animation-delay: var(--delay);
-		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); /* Mirip dengan quintOut */
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 		animation-fill-mode: both;
-
-		/* Jaga agar animasi 'paused' sampai di-trigger oleh JavaScript */
 		animation-play-state: paused;
 	}
 
-	/* 3. Saat kelas .start-animation ditambahkan oleh JS, jalankan animasi */
 	.start-animation {
 		animation-play-state: running;
 	}
