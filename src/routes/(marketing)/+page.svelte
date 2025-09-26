@@ -3,7 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import Hero from '$lib/components/Hero.svelte';
-	import { ArrowRight } from 'lucide-svelte';
+	import { ArrowRight, FileText, Lightbulb, Users } from 'lucide-svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { kepengurusan } from '$lib/dummy';
 
@@ -41,19 +41,19 @@
 			title: 'Pengembangan Kompetensi',
 			description:
 				'Menyediakan pelatihan dan workshop untuk meningkatkan keterampilan teknis dan non-teknis anggota.',
-			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`
+			icon: FileText
 		},
 		{
 			title: 'Kolaborasi dan Jaringan',
 			description:
 				'Membangun jaringan yang kuat antara mahasiswa, alumni, dan profesional di bidang teknologi.',
-			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>`
+			icon: Users
 		},
 		{
 			title: 'Inovasi dan Kreativitas',
 			description:
 				'Mendorong anggota untuk berinovasi dan menciptakan proyek yang dapat memberikan dampak positif.',
-			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M15.042 21.672L13.684 16.6m0 0l-2.5-2.5m2.5 2.5l5.016-1.672M13.684 16.6L21 5l-5.016-1.672M13.684 16.6L3 19l1.672-5.016m0 0l2.5-2.5m-2.5 2.5L1 11l5.016 1.672m-5.016-1.672L9 3l1.672 5.016M11.316 8.332l2.5 2.5m-2.5-2.5l5.016 1.672"/></svg>`
+			icon: Lightbulb
 		}
 	];
 
@@ -118,7 +118,7 @@
 						class="bg-card ring-border shadow-primary flex flex-col rounded-2xl p-8 ring-1 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
 						in:fly={{ y: 30, duration: 600, delay: 150 * index, easing: quintOut }}
 					>
-						<div class="mb-4">{@html misi.icon}</div>
+						<svelte:component this={misi.icon} class="text-primary h-8 w-8" />
 						<h3 class="text-card-foreground text-xl font-semibold">{misi.title}</h3>
 						<p class="text-muted-foreground mt-2 flex-auto text-base leading-7">
 							{misi.description}
