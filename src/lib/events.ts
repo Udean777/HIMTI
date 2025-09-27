@@ -26,7 +26,7 @@ export const allArticles: NewsArticle[] = [
 			'HIMTI adalah organisasi yang mewadahi seluruh mahasiswa Teknologi Informasi di UNPAB untuk mengembangkan potensi, kreativitas, dan kepemimpinan.',
 		details: `
       <p class="text-xl leading-7 [&:not(:first-child)]:mt-6">
-        Himpunan Mahasiswa Teknologi Informasi (HIMTI) adalah organisasi mahasiswa yang mewadahi seluruh mahasiswa program studi Teknologi Informasi di Universitas Pembangunan Panca Budi (UNPAB). HIMTI diresmikan pada Tanggal 30 September 2025.
+        Himpunan Mahasiswa Teknologi Informasi (HIMTI) adalah organisasi mahasiswa yang mewadahi seluruh mahasiswa program studi Teknologi Informasi di Universitas Pembangunan Panca Budi (UNPAB). HIMTI diresmikan pada Tanggal 30 September 2024.
       </p>
       <p class="leading-7 [&:not(:first-child)]:mt-6">
         HIMTI hadir sebagai sarana untuk mengembangkan potensi akademik, keterampilan, kreativitas, dan kepemimpinan mahasiswa, serta menjadi jembatan komunikasi antara mahasiswa, dosen, dan pihak kampus.
